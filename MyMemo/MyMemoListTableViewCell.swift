@@ -11,6 +11,8 @@ class MyMemoListTableViewCell: UITableViewCell {
 
     @IBOutlet var myMemoListButton: UIButton!
     @IBOutlet var myMemoListText: UILabel!
+    @IBOutlet var myMemoListDate: UILabel!
+    
     var checkButtonState = true
     
     override func awakeFromNib() {
