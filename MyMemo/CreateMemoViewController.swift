@@ -10,6 +10,11 @@ import UIKit
 class CreateMemoViewController: UIViewController {
     
     @IBOutlet var writeMemoTextView: UITextView!
+    @IBOutlet var test: UILabel!
+    
+    var selectedDate: String = ""
+    var writenText: String = ""
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,11 +33,24 @@ class CreateMemoViewController: UIViewController {
     // 완료 버튼 클릭 시, 이전 화면으로 이동
     @objc func finishButtonTapped() {
         navigationController?.popViewController(animated: true)
+        (self.navigationController?.viewControllers.first as? MemoListViewController)?.addDateArray(date: selectedDate)
+        writenText = writeMemoTextView.text
+        (self.navigationController?.viewControllers.first as? MemoListViewController)?.addTextArray(text: writenText)
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.writeMemoTextView.resignFirstResponder()
     }
+    
+    // 날짜선택 기능
+    @IBAction func selectDate(_ sender: UIDatePicker) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .short
+        selectedDate = dateFormatter.string(from: sender.date)
+    }
+    
 }
 
 // textView에 placeholder 넣기
