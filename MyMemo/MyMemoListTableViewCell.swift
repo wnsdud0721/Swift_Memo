@@ -9,7 +9,8 @@ import UIKit
 
 class MyMemoListTableViewCell: UITableViewCell {
 
-    @IBOutlet var myMemoListButton: UIButton!
+    @IBOutlet var myMemoListCheckButton: UIButton!
+    @IBOutlet var myMemoListDateButton: UIButton!
     @IBOutlet var myMemoListText: UILabel!
     @IBOutlet var myMemoListDate: UILabel!
     
@@ -18,7 +19,7 @@ class MyMemoListTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        myMemoListButton.setImage(UIImage(systemName: "square"), for: .normal)
+        myMemoListCheckButton.setImage(UIImage(systemName: "square"), for: .normal)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -31,18 +32,19 @@ class MyMemoListTableViewCell: UITableViewCell {
         
         // 클릭 시 checkmark.square로 이미지 변경 & 취소선 생성
         if checkButtonState {
-            myMemoListButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            myMemoListCheckButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
             myMemoListText.attributedText = myMemoListText.text?.strikeThrough()
         }
         
         // 클릭 시 원래의 square로 이미지 변경 & 취소선 생성 취소
         else {
-            myMemoListButton.setImage(UIImage(systemName: "square"), for: .normal)
+            myMemoListCheckButton.setImage(UIImage(systemName: "square"), for: .normal)
             myMemoListText.attributedText = NSAttributedString(string: myMemoListText.text ?? "")
         }
         
         checkButtonState.toggle()
     }
+    
 }
 
 // 취소선 생성 함수

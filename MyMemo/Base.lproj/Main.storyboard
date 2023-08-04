@@ -53,7 +53,7 @@
                                                         <color key="baseForegroundColor" red="0.31764706970000001" green="0.64313727620000005" blue="0.9098039269" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     </buttonConfiguration>
                                                     <connections>
-                                                        <action selector="checkMyMemoListButton:" destination="UVB-ZC-bvh" eventType="touchUpInside" id="eYW-Ft-QZs"/>
+                                                        <action selector="checkMyMemoListButton:" destination="UVB-ZC-bvh" eventType="touchUpInside" id="fJ8-mf-eOn"/>
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bqV-GV-jtA">
@@ -79,8 +79,9 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="myMemoListButton" destination="SQC-uU-BeO" id="fkW-Ln-HFI"/>
+                                            <outlet property="myMemoListCheckButton" destination="SQC-uU-BeO" id="aOE-yK-FyN"/>
                                             <outlet property="myMemoListDate" destination="TQC-QH-CZx" id="vPj-Yk-DEJ"/>
+                                            <outlet property="myMemoListDateButton" destination="k5z-nc-f3g" id="29d-1L-PWb"/>
                                             <outlet property="myMemoListText" destination="bqV-GV-jtA" id="LX1-4c-0Lc"/>
                                         </connections>
                                     </tableViewCell>

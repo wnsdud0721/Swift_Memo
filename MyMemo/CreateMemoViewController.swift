@@ -10,10 +10,10 @@ import UIKit
 class CreateMemoViewController: UIViewController {
     
     @IBOutlet var writeMemoTextView: UITextView!
-    @IBOutlet var test: UILabel!
     
     var selectedDate: String = ""
     var writenText: String = ""
+    var isTextViewEdited = false
     
     
     override func viewDidLoad() {
@@ -34,9 +34,10 @@ class CreateMemoViewController: UIViewController {
     @objc func finishButtonTapped() {
         navigationController?.popViewController(animated: true)
         (self.navigationController?.viewControllers.first as? MemoListViewController)?.addDateArray(date: selectedDate)
-        writenText = writeMemoTextView.text
-        (self.navigationController?.viewControllers.first as? MemoListViewController)?.addTextArray(text: writenText)
-        
+        if isTextViewEdited {
+            writenText = writeMemoTextView.text
+            (self.navigationController?.viewControllers.first as? MemoListViewController)?.addTextArray(text: writenText)
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -45,10 +46,10 @@ class CreateMemoViewController: UIViewController {
     
     // 날짜선택 기능
     @IBAction func selectDate(_ sender: UIDatePicker) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
-        dateFormatter.timeStyle = .short
-        selectedDate = dateFormatter.string(from: sender.date)
+        //        let dateFormatter = DateFormatter()
+        //        dateFormatter.dateStyle = .short
+        //        dateFormatter.timeStyle = .short
+        //        selectedDate = dateFormatter.string(from: sender.date)
     }
     
 }
@@ -68,5 +69,9 @@ extension CreateMemoViewController: UITextViewDelegate {
             writeMemoTextView.text = nil
             writeMemoTextView.textColor = UIColor.black
         }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        isTextViewEdited = !textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 }
