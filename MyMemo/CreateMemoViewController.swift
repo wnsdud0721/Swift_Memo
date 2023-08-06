@@ -40,30 +40,23 @@ class CreateMemoViewController: UIViewController {
         }
     }
     
+    // 입력 종료
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.writeMemoTextView.resignFirstResponder()
     }
     
     // 날짜선택 기능
     @IBAction func selectDate(_ sender: UIDatePicker) {
-        //        let dateFormatter = DateFormatter()
-        //        dateFormatter.dateStyle = .short
-        //        dateFormatter.timeStyle = .short
-        //        selectedDate = dateFormatter.string(from: sender.date)
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateStyle = .short
+                dateFormatter.timeStyle = .short
+                selectedDate = dateFormatter.string(from: sender.date)
     }
     
 }
 
-// textView에 placeholder 넣기
+// textView에 placeholder 넣기 & 작성 시 텍스트 저장
 extension CreateMemoViewController: UITextViewDelegate {
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if writeMemoTextView.text.isEmpty {
-            writeMemoTextView.text =  "메모를 작성하세요."
-            writeMemoTextView.textColor = UIColor.lightGray
-        }
-        
-    }
-    
     func textViewDidBeginEditing(_ textView: UITextView) {
         if writeMemoTextView.textColor == UIColor.lightGray {
             writeMemoTextView.text = nil
@@ -73,5 +66,14 @@ extension CreateMemoViewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         isTextViewEdited = !textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        //isTextViewEdited = !writeMemoTextView.text.isEmpty
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if writeMemoTextView.text.isEmpty {
+            writeMemoTextView.text =  "메모를 작성하세요."
+            writeMemoTextView.textColor = UIColor.lightGray
+        }
+        
     }
 }

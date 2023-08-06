@@ -53,7 +53,7 @@
                                                         <color key="baseForegroundColor" red="0.31764706970000001" green="0.64313727620000005" blue="0.9098039269" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     </buttonConfiguration>
                                                     <connections>
-                                                        <action selector="checkMyMemoListButton:" destination="UVB-ZC-bvh" eventType="touchUpInside" id="fJ8-mf-eOn"/>
+                                                        <action selector="myMemoListCheckButtonTapped:" destination="UVB-ZC-bvh" eventType="touchUpInside" id="x4D-Jo-SIy"/>
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bqV-GV-jtA">
@@ -75,6 +75,9 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" title="날짜/시간 선택"/>
+                                                    <connections>
+                                                        <action selector="myMemoListDateButtonTapped:" destination="UVB-ZC-bvh" eventType="touchUpInside" id="aZw-3B-LUF"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </tableViewCellContentView>

@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol MyMemoListTableViewCellDelegate: AnyObject {
+    func didTapMyMemoListDateButton(in cell: MyMemoListTableViewCell)
+}
+
 class MyMemoListTableViewCell: UITableViewCell {
 
     @IBOutlet var myMemoListCheckButton: UIButton!
@@ -14,7 +18,9 @@ class MyMemoListTableViewCell: UITableViewCell {
     @IBOutlet var myMemoListText: UILabel!
     @IBOutlet var myMemoListDate: UILabel!
     
-    var checkButtonState = true
+    weak var myMemoListTableViewCellDelegate: MyMemoListTableViewCellDelegate?
+    
+    var myMemoListCheckButtonState = true
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,10 +34,10 @@ class MyMemoListTableViewCell: UITableViewCell {
     }
 
     // 체크박스 클릭 함수
-    @IBAction func checkMyMemoListButton(_ sender: Any) {
+    @IBAction func myMemoListCheckButtonTapped(_ sender: Any) {
         
         // 클릭 시 checkmark.square로 이미지 변경 & 취소선 생성
-        if checkButtonState {
+        if myMemoListCheckButtonState {
             myMemoListCheckButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
             myMemoListText.attributedText = myMemoListText.text?.strikeThrough()
         }
@@ -42,9 +48,12 @@ class MyMemoListTableViewCell: UITableViewCell {
             myMemoListText.attributedText = NSAttributedString(string: myMemoListText.text ?? "")
         }
         
-        checkButtonState.toggle()
+        myMemoListCheckButtonState.toggle()
     }
     
+    @IBAction func myMemoListDateButtonTapped(_ sender: Any) {
+        myMemoListTableViewCellDelegate?.didTapMyMemoListDateButton(in: self)
+    }
 }
 
 // 취소선 생성 함수

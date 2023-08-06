@@ -9,11 +9,11 @@ import UIKit
 
 class MemoListViewController: UIViewController {
     
+    @IBOutlet var myMemoList: UITableView!
+    
     var textArray:Array<String> = []
     var dateArray: Array<String> = []
-    var selectedDate: String = ""
-    
-    @IBOutlet var myMemoList: UITableView!
+    //var selectedDate: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,9 +23,9 @@ class MemoListViewController: UIViewController {
         
         // 네비게이션 바 오른쪽 버튼 커스텀
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil"), style: .plain, target: self, action: #selector(moveCreateMemo))
-        
-        let dateButton = MyMemoListTableViewCell().myMemoListDateButton
-        dateButton?.addTarget(self, action: #selector(showDatePicker), for: .touchUpInside)
+
+//        let dateButton = MyMemoListTableViewCell().myMemoListDateButton
+//        dateButton?.addTarget(self, action: #selector(showDatePicker), for: .touchUpInside)
     }
     
     // 메모 아이콘 클릭 시, 메모 작성 화면으로 이동
@@ -35,7 +35,7 @@ class MemoListViewController: UIViewController {
     }
     
     // 날짜 선택 버튼 클릭 시, Date Picker 생성
-    @objc func showDatePicker(_ sender: UIButton) {
+//    @objc func showDatePicker(_ sender: UIButton) {
 //        var datePicker = UIDatePicker()
 //        datePicker.datePickerMode = .dateAndTime
 //        datePicker.preferredDatePickerStyle = .wheels
@@ -54,8 +54,8 @@ class MemoListViewController: UIViewController {
 //        alertController.addAction(doneAction)
 //
 //        present(alertController, animated: true, completion: nil)
-        print("test")
-    }
+//        print("test")
+//    }
     
     func addDateArray (date: String) {
         dateArray.append(date)
@@ -68,7 +68,7 @@ class MemoListViewController: UIViewController {
     }
 }
 
-extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
+extension MemoListViewController: UITableViewDelegate, UITableViewDataSource, MyMemoListTableViewCellDelegate {
     
     // DataSource: 몇 개의 데이터를 보여줄 것인가
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -82,8 +82,29 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
         
         myMemoListTableViewCell.myMemoListText.text = textArray[indexPath.row]
         myMemoListTableViewCell.myMemoListDate.text = dateArray[indexPath.row]
+        myMemoListTableViewCell.myMemoListDateButton.titleLabel?.text = dateArray[indexPath.row]
+        
+        myMemoListTableViewCell.myMemoListTableViewCellDelegate = self
         
         return myMemoListTableViewCell
     }
+    
+    func didTapMyMemoListDateButton(in cell: MyMemoListTableViewCell) {
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .dateAndTime
+        datePicker.preferredDatePickerStyle = .wheels
+        datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
+        self.view.addSubview(datePicker)
+        
+        // DatePicker를 A ViewController 하단에 위치시키기 위한 오토레이아웃 설정
+        datePicker.translatesAutoresizingMaskIntoConstraints = false
+        datePicker.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        datePicker.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        datePicker.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+    }
+    
+    @objc func datePickerValueChanged(_ sender: UIDatePicker) {
+            // DatePicker의 값이 변경되었을 때 처리할 로직을 작성합니다.
+        }
     
 }
