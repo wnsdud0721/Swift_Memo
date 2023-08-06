@@ -60,8 +60,6 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource, My
         let myMemoListTableViewCell = tableView.dequeueReusableCell(withIdentifier: "MyMemoListTableViewCell", for: indexPath) as! MyMemoListTableViewCell
         
         myMemoListTableViewCell.myMemoListText.text = textArray[indexPath.row]
-        //myMemoListTableViewCell.myMemoListDateButton.titleLabel?.text = dateArray[indexPath.row]
-        myMemoListTableViewCell.setupMyMemoListDateButton()
         
         myMemoListTableViewCell.myMemoListTableViewCellDelegate = self
         
