@@ -11,7 +11,6 @@ class CreateMemoViewController: UIViewController {
     
     @IBOutlet var writeMemoTextView: UITextView!
     
-    var selectedDate: String = ""
     var writenText: String = ""
     var isTextViewEdited = false
     
@@ -33,7 +32,6 @@ class CreateMemoViewController: UIViewController {
     // 완료 버튼 클릭 시, 이전 화면으로 이동
     @objc func finishButtonTapped() {
         navigationController?.popViewController(animated: true)
-        (self.navigationController?.viewControllers.first as? MemoListViewController)?.addDateArray(date: selectedDate)
         if isTextViewEdited {
             writenText = writeMemoTextView.text
             (self.navigationController?.viewControllers.first as? MemoListViewController)?.addTextArray(text: writenText)
@@ -50,7 +48,6 @@ class CreateMemoViewController: UIViewController {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateStyle = .short
                 dateFormatter.timeStyle = .short
-                selectedDate = dateFormatter.string(from: sender.date)
     }
     
 }

@@ -13,7 +13,9 @@ class MemoListViewController: UIViewController {
     
     var textArray:Array<String> = []
     var dateArray: Array<String> = []
-    //var selectedDate: String = ""
+    var selectedDate: String = ""
+    
+    var dateButton = MyMemoListTableViewCell().myMemoListDateButton
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +26,7 @@ class MemoListViewController: UIViewController {
         // 네비게이션 바 오른쪽 버튼 커스텀
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil"), style: .plain, target: self, action: #selector(moveCreateMemo))
 
-//        let dateButton = MyMemoListTableViewCell().myMemoListDateButton
+        
 //        dateButton?.addTarget(self, action: #selector(showDatePicker), for: .touchUpInside)
     }
     
@@ -33,29 +35,6 @@ class MemoListViewController: UIViewController {
         guard let moveCreateMemoVC = self.storyboard?.instantiateViewController(identifier: "CreateMemoViewController") else {return}
         self.navigationController?.pushViewController(moveCreateMemoVC, animated: true)
     }
-    
-    // 날짜 선택 버튼 클릭 시, Date Picker 생성
-//    @objc func showDatePicker(_ sender: UIButton) {
-//        var datePicker = UIDatePicker()
-//        datePicker.datePickerMode = .dateAndTime
-//        datePicker.preferredDatePickerStyle = .wheels
-//        datePicker.locale = Locale(identifier: "ko-KR")
-//
-//        let alertController = UIAlertController(title: "Select Date", message: nil, preferredStyle: .actionSheet)
-//        alertController.view.addSubview(datePicker)
-//
-//        let doneAction = UIAlertAction(title: "Done", style: .default) { _ in
-//            let dateFormatter = DateFormatter()
-//            dateFormatter.dateStyle = .short
-//            dateFormatter.timeStyle = .short
-//            self.selectedDate = dateFormatter.string(from: datePicker.date)
-//            self.addDateArray(date: self.selectedDate)
-//        }
-//        alertController.addAction(doneAction)
-//
-//        present(alertController, animated: true, completion: nil)
-//        print("test")
-//    }
     
     func addDateArray (date: String) {
         dateArray.append(date)
@@ -81,30 +60,47 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource, My
         let myMemoListTableViewCell = tableView.dequeueReusableCell(withIdentifier: "MyMemoListTableViewCell", for: indexPath) as! MyMemoListTableViewCell
         
         myMemoListTableViewCell.myMemoListText.text = textArray[indexPath.row]
-        myMemoListTableViewCell.myMemoListDate.text = dateArray[indexPath.row]
-        myMemoListTableViewCell.myMemoListDateButton.titleLabel?.text = dateArray[indexPath.row]
+        //myMemoListTableViewCell.myMemoListDateButton.titleLabel?.text = dateArray[indexPath.row]
+        myMemoListTableViewCell.setupMyMemoListDateButton()
         
         myMemoListTableViewCell.myMemoListTableViewCellDelegate = self
         
         return myMemoListTableViewCell
     }
     
-    func didTapMyMemoListDateButton(in cell: MyMemoListTableViewCell) {
+    func didTapMyMemoListDateButton(in cell: MyMemoListTableViewCell) {        
+        let alert = UIAlertController(title: "날짜 고르기", message: "날짜를 골라주세요", preferredStyle: .actionSheet)
+        
+        
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .dateAndTime
         datePicker.preferredDatePickerStyle = .wheels
+        datePicker.locale = Locale(identifier: "ko_KR")
         datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
-        self.view.addSubview(datePicker)
         
-        // DatePicker를 A ViewController 하단에 위치시키기 위한 오토레이아웃 설정
-        datePicker.translatesAutoresizingMaskIntoConstraints = false
-        datePicker.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        datePicker.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        datePicker.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        let ok = UIAlertAction(title: "선택 완료", style: .cancel) { action in
+            self.addDateArray(date: self.selectedDate)
+            cell.myMemoListDateButton.setTitle(self.selectedDate, for: .normal)
+        }
+        
+        alert.addAction(ok)
+        
+        let vc = UIViewController()
+        vc.view = datePicker
+        
+        alert.setValue(vc, forKey: "contentViewController")
+        
+        present(alert, animated: true)
+        
+        
     }
     
     @objc func datePickerValueChanged(_ sender: UIDatePicker) {
-            // DatePicker의 값이 변경되었을 때 처리할 로직을 작성합니다.
-        }
+        // DatePicker의 값이 변경되었을 때 처리할 로직을 작성합니다.
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .short
+        selectedDate = dateFormatter.string(from: sender.date)
+    }
     
 }

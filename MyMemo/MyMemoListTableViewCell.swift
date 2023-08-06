@@ -51,9 +51,17 @@ class MyMemoListTableViewCell: UITableViewCell {
         myMemoListCheckButtonState.toggle()
     }
     
+    // 날짜선택 버튼 클릭 함수
     @IBAction func myMemoListDateButtonTapped(_ sender: Any) {
         myMemoListTableViewCellDelegate?.didTapMyMemoListDateButton(in: self)
     }
+    
+    // 날짜선택 버튼 초기 설정
+    func setupMyMemoListDateButton () {
+        myMemoListDateButton.setTitle("날짜 선택", for: .normal)
+    }
+    
+    
 }
 
 // 취소선 생성 함수
