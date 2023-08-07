@@ -7,6 +7,7 @@
 
 import UIKit
 
+// Delegate Pattern을 위한 protocol 생성
 protocol MyMemoListTableViewCellDelegate: AnyObject {
     func didTapMyMemoListDateButton(in cell: MyMemoListTableViewCell)
 }
@@ -16,11 +17,12 @@ class MyMemoListTableViewCell: UITableViewCell {
     @IBOutlet var myMemoListCheckButton: UIButton!
     @IBOutlet var myMemoListDateButton: UIButton!
     @IBOutlet var myMemoListText: UILabel!
-    @IBOutlet var myMemoListDate: UILabel!
-    
-    weak var myMemoListTableViewCellDelegate: MyMemoListTableViewCellDelegate?
     
     var myMemoListCheckButtonState = true
+    
+    // 타입이 protocol인 property
+    // 메모리 누수를 방지하기 위하여 weak을 사용
+    weak var myMemoListTableViewCellDelegate: MyMemoListTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -55,13 +57,7 @@ class MyMemoListTableViewCell: UITableViewCell {
     @IBAction func myMemoListDateButtonTapped(_ sender: Any) {
         myMemoListTableViewCellDelegate?.didTapMyMemoListDateButton(in: self)
     }
-    
-    // 날짜선택 버튼 초기 설정
-    func setupMyMemoListDateButton () {
-        myMemoListDateButton.setTitle("날짜 선택", for: .normal)
-    }
-    
-    
+
 }
 
 // 취소선 생성 함수
