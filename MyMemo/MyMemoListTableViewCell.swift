@@ -55,6 +55,8 @@ class MyMemoListTableViewCell: UITableViewCell {
     
     // 날짜선택 버튼 클릭 함수
     @IBAction func myMemoListDateButtonTapped(_ sender: Any) {
+        
+        // MemoListViewController에게 메서드 호출을 요청
         myMemoListTableViewCellDelegate?.didTapMyMemoListDateButton(in: self)
     }
 

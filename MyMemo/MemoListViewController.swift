@@ -64,7 +64,7 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource, My
     func didTapMyMemoListDateButton(in cell: MyMemoListTableViewCell) {
         
         // UIAlertController 생성
-        let alert = UIAlertController(title: "날짜 고르기", message: "날짜를 골라주세요", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "날짜/시간 고르기", message: "날짜/시간을 골라주세요", preferredStyle: .actionSheet)
         
         // UIDatePicker 생성
         let datePicker = UIDatePicker()

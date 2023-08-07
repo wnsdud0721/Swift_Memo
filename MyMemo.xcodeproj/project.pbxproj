@@ -15,6 +15,7 @@
 		104037132A78AAFD00DE03EE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 104037112A78AAFD00DE03EE /* LaunchScreen.storyboard */; };
 		1040371B2A78B7DE00DE03EE /* CreateMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1040371A2A78B7DE00DE03EE /* CreateMemoViewController.swift */; };
 		104037212A791BB000DE03EE /* MyMemoListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104037202A791BB000DE03EE /* MyMemoListTableViewCell.swift */; };
+		10E7B7322A80E246005DBBB5 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E7B7312A80E246005DBBB5 /* TestViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		104037142A78AAFD00DE03EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1040371A2A78B7DE00DE03EE /* CreateMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateMemoViewController.swift; sourceTree = "<group>"; };
 		104037202A791BB000DE03EE /* MyMemoListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMemoListTableViewCell.swift; sourceTree = "<group>"; };
+		10E7B7312A80E246005DBBB5 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				104037062A78AAFB00DE03EE /* AppDelegate.swift */,
 				104037082A78AAFB00DE03EE /* SceneDelegate.swift */,
 				1040370C2A78AAFB00DE03EE /* Main.storyboard */,
+				10E7B7312A80E246005DBBB5 /* TestViewController.swift */,
 				1040370A2A78AAFB00DE03EE /* MemoListViewController.swift */,
 				104037202A791BB000DE03EE /* MyMemoListTableViewCell.swift */,
 				1040371A2A78B7DE00DE03EE /* CreateMemoViewController.swift */,
@@ -148,6 +151,7 @@
 				104037072A78AAFB00DE03EE /* AppDelegate.swift in Sources */,
 				1040371B2A78B7DE00DE03EE /* CreateMemoViewController.swift in Sources */,
 				104037092A78AAFB00DE03EE /* SceneDelegate.swift in Sources */,
+				10E7B7322A80E246005DBBB5 /* TestViewController.swift in Sources */,
 				104037212A791BB000DE03EE /* MyMemoListTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
