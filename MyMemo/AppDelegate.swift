@@ -28,8 +28,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 델리게이트 할당
         UNUserNotificationCenter.current().delegate = self
         
+        if let notification = launchOptions?[.remoteNotification] as? [String: AnyObject] {
+                if let badgeNumber = notification["badge"] as? Int {
+                    UIApplication.shared.applicationIconBadgeNumber = badgeNumber
+                } else {
+                    UIApplication.shared.applicationIconBadgeNumber = 0
+                }
+            } else {
+                UIApplication.shared.applicationIconBadgeNumber = 0
+            }
+        
         return true
     }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        // 알림 처리 로직
+        if let badgeNumber = userInfo["badge"] as? Int {
+            let currentBadgeNumber = UIApplication.shared.applicationIconBadgeNumber
+                    // 새 뱃지 숫자 설정 (수신한 숫자에 1을 더함)
+                    UIApplication.shared.applicationIconBadgeNumber = currentBadgeNumber + badgeNumber
+        }
+        
+        completionHandler(.newData)
+    }
+    
+    func applicationWillEnterForeground(_ application: UIApplication) {
+            UIApplication.shared.applicationIconBadgeNumber = 0
+        }
     
     // MARK: UISceneSession Lifecycle
     

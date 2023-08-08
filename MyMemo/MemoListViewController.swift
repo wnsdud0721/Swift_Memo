@@ -14,6 +14,7 @@ class MemoListViewController: UIViewController {
     var textArray:Array<String> = []
     var dateArray: Array<String> = []
     var selectedDate: String = ""
+    var notiBadgeNumber: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +41,27 @@ class MemoListViewController: UIViewController {
     func addTextArray (text: String) {
         textArray.append(text)
         myMemoList.reloadData()
+    }
+    
+    func setupLocalNotification(at date: Date, with message: String) {
+        let currentBadgeNumber = UIApplication.shared.applicationIconBadgeNumber
+        
+        let content = UNMutableNotificationContent()
+        content.title = "메모 알림"
+        content.body = message
+        content.sound = UNNotificationSound.default
+        content.badge = (currentBadgeNumber + 1) as NSNumber
+        
+        let triggerDate = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: date)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
+        
+        let request = UNNotificationRequest(identifier: "MemoNotification", content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request) { (error) in
+            if let error = error {
+                print("로컬 알림 예약 에러: \(error)")
+            }
+        }
     }
 }
 
@@ -79,6 +101,13 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource, My
             // 버튼 클릭 시 진행
             self.addDateArray(date: self.selectedDate)
             cell.myMemoListDateButton.setTitle(self.selectedDate, for: .normal)
+            
+            let notiDateFormatter = DateFormatter()
+            notiDateFormatter.dateStyle = .short
+            notiDateFormatter.timeStyle = .short
+            if let notiDateTime = notiDateFormatter.date(from: self.selectedDate) {
+                self.setupLocalNotification(at: notiDateTime, with: "메모를 확인하세요.")
+            }
         }
         
         // 취소 버튼 생성
