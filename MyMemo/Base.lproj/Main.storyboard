@@ -113,9 +113,9 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="zwq-bl-jL7" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="97y-lS-94x"/>
+                            <constraint firstItem="zwq-bl-jL7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Lag-sZ-2rz"/>
                             <constraint firstItem="zwq-bl-jL7" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bOB-8d-Cf5"/>
                             <constraint firstAttribute="bottom" secondItem="zwq-bl-jL7" secondAttribute="bottom" id="bgC-KN-xJ9"/>
-                            <constraint firstItem="zwq-bl-jL7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="oBF-aU-R23"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="메모" largeTitleDisplayMode="always" id="fc6-vS-s6e"/>

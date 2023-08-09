@@ -23,7 +23,6 @@ class TestViewController: UIViewController {
         content.title = "노티 (타이틀)"
         content.body = "노티 (바디)"
         content.sound = .default
-        //content.badge = 2
         
         let request = UNNotificationRequest(
             identifier: "local noti",

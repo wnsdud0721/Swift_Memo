@@ -12,9 +12,7 @@ class MemoListViewController: UIViewController {
     @IBOutlet var myMemoList: UITableView!
     
     var textArray:Array<String> = []
-    var dateArray: Array<String> = []
     var selectedDate: String = ""
-    var notiBadgeNumber: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,11 +29,6 @@ class MemoListViewController: UIViewController {
         
         guard let moveCreateMemoVC = self.storyboard?.instantiateViewController(identifier: "CreateMemoViewController") else {return}
         self.navigationController?.pushViewController(moveCreateMemoVC, animated: true)
-    }
-    
-    func addDateArray (date: String) {
-        dateArray.append(date)
-        myMemoList.reloadData()
     }
     
     func addTextArray (text: String) {
@@ -82,6 +75,23 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource, My
         return myMemoListTableViewCell
     }
     
+    // 스와이프 시, 메모 삭제 버튼 활성화
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let deleteMemo = UIContextualAction(style: .normal, title: nil) { (action, view, completion) in
+            self.textArray.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            completion(true)
+        }
+        
+        deleteMemo.backgroundColor = .systemRed
+        deleteMemo.image = UIImage(systemName: "trash.fill")
+        
+        let configuration = UISwipeActionsConfiguration(actions: [deleteMemo])
+        configuration.performsFirstActionWithFullSwipe = false
+        return configuration
+    }
+    
     // MyMemoListTableViewCellDelegate의 필수 메서드
     func didTapMyMemoListDateButton(in cell: MyMemoListTableViewCell) {
         
@@ -98,10 +108,10 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource, My
         // 선택 완료 버튼 생성
         let ok = UIAlertAction(title: "선택 완료", style: .default) { action in
             
-            // 버튼 클릭 시 진행
-            self.addDateArray(date: self.selectedDate)
+            // 완료 버튼 클릭 시, 버튼 이름 바꿈
             cell.myMemoListDateButton.setTitle(self.selectedDate, for: .normal)
             
+            // 버튼 클릭 시 noti 불러오기
             let notiDateFormatter = DateFormatter()
             notiDateFormatter.dateStyle = .short
             notiDateFormatter.timeStyle = .short
