@@ -21,8 +21,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             // alert - 알림이 화면에 노출, sound - 소리, badge - 빨간색 동그라미 숫자
             options: [.alert, .sound, .badge],
-            completionHandler: { (granted, error) in
-                print("granted notification, \(granted)")
+            completionHandler: { (success, error) in
+                if success {
+                    // 권한이 허용되었을 때의 처리
+                }
+                else {
+                    // 권한이 거부되었을 때의 처리
+                }
             }
         )
         
@@ -93,5 +98,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
         UIApplication.shared.applicationIconBadgeNumber = 0
+        print("test3")
     }
 }
