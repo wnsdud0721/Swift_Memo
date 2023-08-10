@@ -37,19 +37,25 @@ class MemoListViewController: UIViewController {
     }
     
     func setupLocalNotification(at date: Date, with message: String) {
+        
+        // 현재 앱 아이콘의 badge 숫자를 가져옴
         let currentBadgeNumber = UIApplication.shared.applicationIconBadgeNumber
         
+        // 알림 콘텐츠 생성
         let content = UNMutableNotificationContent()
         content.title = "메모 알림"
         content.body = message
         content.sound = UNNotificationSound.default
         content.badge = (currentBadgeNumber + 1) as NSNumber
         
+        // 알림 트리거 생성
         let triggerDate = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: date)
         let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
         
+        // 알림 요청 생성
         let request = UNNotificationRequest(identifier: "MemoNotification", content: content, trigger: trigger)
         
+        // 생성한 알림 요청을 사용자 알림 센터에 추가
         UNUserNotificationCenter.current().add(request) { (error) in
             if let error = error {
                 print("로컬 알림 예약 에러: \(error)")
@@ -91,6 +97,17 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource, My
         configuration.performsFirstActionWithFullSwipe = false
         return configuration
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let createMemoVC = self.storyboard?.instantiateViewController(identifier: "CreateMemoViewController") as? CreateMemoViewController else { return }
+
+        // 선택된 셀의 메모 내용 전달
+        createMemoVC.existingMemoText = textArray[indexPath.row]
+        createMemoVC.editingMemoIndex = indexPath.row
+
+        self.navigationController?.pushViewController(createMemoVC, animated: true)
+    }
+
     
     // MyMemoListTableViewCellDelegate의 필수 메서드
     func didTapMyMemoListDateButton(in cell: MyMemoListTableViewCell) {

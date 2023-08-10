@@ -14,25 +14,44 @@ class CreateMemoViewController: UIViewController {
     var writenText: String = ""
     var isTextViewEdited = false
     
+    var existingMemoText: String?
+    var editingMemoIndex: Int?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // 네비게이션 바 오른쪽 버튼 커스텀 -> 완료
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(finishButtonTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(finishButtonTappedNew))
         
         // textView에 placeholder 넣기
         writeMemoTextView.delegate = self
-        writeMemoTextView.text = "메모를 작성하세요."
-        writeMemoTextView.textColor = UIColor.lightGray
+        
+        if let existingMemoText = existingMemoText {
+            writeMemoTextView.text = existingMemoText
+            writeMemoTextView.textColor = UIColor.black
+        }
+        else {
+            writeMemoTextView.text = "메모를 작성하세요."
+            writeMemoTextView.textColor = UIColor.lightGray
+        }
     }
     
     // 완료 버튼 클릭 시, 이전 화면으로 이동
-    @objc func finishButtonTapped() {
+    @objc func finishButtonTappedNew() {
         navigationController?.popViewController(animated: true)
-        if isTextViewEdited {
-            writenText = writeMemoTextView.text
-            (self.navigationController?.viewControllers.first as? MemoListViewController)?.addTextArray(text: writenText)
+        
+        if let updatedMemo = writeMemoTextView.text, !updatedMemo.isEmpty,
+           let index = editingMemoIndex {
+            // 수정된 메모 내용을 업데이트하고 해당 셀만 리로드
+            (self.navigationController?.viewControllers.first as? MemoListViewController)?.textArray[index] = updatedMemo
+            (self.navigationController?.viewControllers.first as? MemoListViewController)?.myMemoList.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+        }
+        else {
+            if isTextViewEdited {
+                writenText = writeMemoTextView.text
+                (self.navigationController?.viewControllers.first as? MemoListViewController)?.addTextArray(text: writenText)
+            }
         }
     }
     

@@ -36,18 +36,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // 앱이 원격 알림을 통해 실행된 경우에 해당하는 처리를 수행
         // 앱이 처음 실행될 때 배지 숫자를 0으로 설정
-        if let notification = launchOptions?[.remoteNotification] as? [String: AnyObject] {
-            if let badgeNumber = notification["badge"] as? Int {
-                UIApplication.shared.applicationIconBadgeNumber = badgeNumber
-            }
-            else {
-                UIApplication.shared.applicationIconBadgeNumber = 0
-            }
-        }
-        else {
-            UIApplication.shared.applicationIconBadgeNumber = 0
-        }
-        
+//        if let notification = launchOptions?[.remoteNotification] as? [String: AnyObject] {
+//            if let badgeNumber = notification["badge"] as? Int {
+//                UIApplication.shared.applicationIconBadgeNumber = badgeNumber
+//            }
+//            else {
+//                UIApplication.shared.applicationIconBadgeNumber = 0
+//            }
+//        }
+//        else {
+//            UIApplication.shared.applicationIconBadgeNumber = 0
+//        }
+        UIApplication.shared.applicationIconBadgeNumber = 0
         return true
     }
     
@@ -98,6 +98,5 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
         UIApplication.shared.applicationIconBadgeNumber = 0
-        print("test3")
     }
 }
