@@ -34,34 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 델리게이트 할당
         UNUserNotificationCenter.current().delegate = self
         
-        // 앱이 원격 알림을 통해 실행된 경우에 해당하는 처리를 수행
-        // 앱이 처음 실행될 때 배지 숫자를 0으로 설정
-//        if let notification = launchOptions?[.remoteNotification] as? [String: AnyObject] {
-//            if let badgeNumber = notification["badge"] as? Int {
-//                UIApplication.shared.applicationIconBadgeNumber = badgeNumber
-//            }
-//            else {
-//                UIApplication.shared.applicationIconBadgeNumber = 0
-//            }
-//        }
-//        else {
-//            UIApplication.shared.applicationIconBadgeNumber = 0
-//        }
+        // 초기 badge 숫자를 0으로 설정
         UIApplication.shared.applicationIconBadgeNumber = 0
         return true
-    }
-    
-    // 원격 알림을 수신했을 때 호출되는 메서드
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        
-        // 알림 처리 로직
-        if let badgeNumber = userInfo["badge"] as? Int {
-            let currentBadgeNumber = UIApplication.shared.applicationIconBadgeNumber
-            // 새 뱃지 숫자 설정 (수신한 숫자에 1을 더함)
-            UIApplication.shared.applicationIconBadgeNumber = currentBadgeNumber + badgeNumber
-        }
-        
-        completionHandler(.newData)
     }
     
     // 앱이 활성화될 때 호출되는 메서드
@@ -96,6 +71,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
         [.list, .banner, .sound]
     }
+    
+    // 알람을 클릭하여 앱을 실행했을 때, badge 숫자를 0으로 설정
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
         UIApplication.shared.applicationIconBadgeNumber = 0
     }

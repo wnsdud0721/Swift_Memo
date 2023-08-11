@@ -74,28 +74,12 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource, My
         let myMemoListTableViewCell = tableView.dequeueReusableCell(withIdentifier: "MyMemoListTableViewCell", for: indexPath) as! MyMemoListTableViewCell
         
         myMemoListTableViewCell.myMemoListText.text = textArray[indexPath.row]
+        //myMemoListTableViewCell.memoDate = selectedDate
         
         // MyMemoListTableViewCellDelegate의 대리자 설정
         myMemoListTableViewCell.myMemoListTableViewCellDelegate = self
         
         return myMemoListTableViewCell
-    }
-    
-    // 스와이프 시, 메모 삭제 버튼 활성화
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        
-        let deleteMemo = UIContextualAction(style: .normal, title: nil) { (action, view, completion) in
-            self.textArray.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-            completion(true)
-        }
-        
-        deleteMemo.backgroundColor = .systemRed
-        deleteMemo.image = UIImage(systemName: "trash.fill")
-        
-        let configuration = UISwipeActionsConfiguration(actions: [deleteMemo])
-        configuration.performsFirstActionWithFullSwipe = false
-        return configuration
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -104,10 +88,38 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource, My
         // 선택된 셀의 메모 내용 전달
         createMemoVC.existingMemoText = textArray[indexPath.row]
         createMemoVC.editingMemoIndex = indexPath.row
+        createMemoVC.saveDate = selectedDate
+        
+        createMemoVC.isEditingMode = true
 
         self.navigationController?.pushViewController(createMemoVC, animated: true)
     }
-
+    
+    // 스와이프 시, 오른쪽 축에 메모 삭제 버튼 활성화
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        // 삭제를 위한 UIContextualAction 생성
+        let deleteMemo = UIContextualAction(style: .normal, title: nil) { (action, view, completion) in
+            
+            // 삭제 실행시 수행
+            self.textArray.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            completion(true)
+        }
+        
+        // 삭제 버튼
+        deleteMemo.backgroundColor = .systemRed
+        deleteMemo.image = UIImage(systemName: "trash.fill")
+        
+        // 삭제를 포함하는 UISwipeActionsConfiguration 생성
+        let configuration = UISwipeActionsConfiguration(actions: [deleteMemo])
+        
+        // 전체 스와이프를 사용X
+        configuration.performsFirstActionWithFullSwipe = false
+        
+        // 액션을 셀에 적용하기 위해 설정 반환
+        return configuration
+    }
     
     // MyMemoListTableViewCellDelegate의 필수 메서드
     func didTapMyMemoListDateButton(in cell: MyMemoListTableViewCell) {

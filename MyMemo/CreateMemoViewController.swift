@@ -11,34 +11,50 @@ class CreateMemoViewController: UIViewController {
     
     @IBOutlet var writeMemoTextView: UITextView!
     
-    var writenText: String = ""
     var isTextViewEdited = false
     
     var existingMemoText: String?
     var editingMemoIndex: Int?
+    var saveDate: String?
+    
+    var isEditingMode = false
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 네비게이션 바 오른쪽 버튼 커스텀 -> 완료
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(finishButtonTappedNew))
-        
         // textView에 placeholder 넣기
         writeMemoTextView.delegate = self
         
-        if let existingMemoText = existingMemoText {
-            writeMemoTextView.text = existingMemoText
-            writeMemoTextView.textColor = UIColor.black
+        if isEditingMode {
+            if let existingMemoText = existingMemoText {
+                writeMemoTextView.text = existingMemoText
+                writeMemoTextView.textColor = UIColor.black
+            }
+            // 네비게이션 바 오른쪽 버튼 커스텀 -> 완료
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(finishButtonTappedEdit))
         }
         else {
             writeMemoTextView.text = "메모를 작성하세요."
             writeMemoTextView.textColor = UIColor.lightGray
+            
+            // 네비게이션 바 오른쪽 버튼 커스텀 -> 완료
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(finishButtonTappedNew))
         }
     }
     
     // 완료 버튼 클릭 시, 이전 화면으로 이동
     @objc func finishButtonTappedNew() {
+        navigationController?.popViewController(animated: true)
+        
+        if isTextViewEdited {
+            (self.navigationController?.viewControllers.first as? MemoListViewController)?.addTextArray(text: writeMemoTextView.text)
+        }
+        
+    }
+    
+    // 완료 버튼 클릭 시, 이전 화면으로 이동
+    @objc func finishButtonTappedEdit() {
         navigationController?.popViewController(animated: true)
         
         if let updatedMemo = writeMemoTextView.text, !updatedMemo.isEmpty,
@@ -47,11 +63,9 @@ class CreateMemoViewController: UIViewController {
             (self.navigationController?.viewControllers.first as? MemoListViewController)?.textArray[index] = updatedMemo
             (self.navigationController?.viewControllers.first as? MemoListViewController)?.myMemoList.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
         }
-        else {
-            if isTextViewEdited {
-                writenText = writeMemoTextView.text
-                (self.navigationController?.viewControllers.first as? MemoListViewController)?.addTextArray(text: writenText)
-            }
+        
+        if let saveDate = saveDate {
+            (self.navigationController?.viewControllers.first as? MemoListViewController)?.selectedDate = saveDate
         }
     }
     

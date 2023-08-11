@@ -19,6 +19,7 @@ class MyMemoListTableViewCell: UITableViewCell {
     @IBOutlet var myMemoListText: UILabel!
     
     var myMemoListCheckButtonState = true
+    var memoDate: String = ""
     
     // 타입이 protocol인 property
     // 메모리 누수를 방지하기 위하여 weak을 사용
